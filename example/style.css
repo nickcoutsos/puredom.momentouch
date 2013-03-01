@@ -1,0 +1,42 @@
+body {
+	overflow: hidden;
+}
+
+#container {
+	position: relative;
+	border: 1px solid red;
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+.ball {
+	position: absolute;
+	width: 78px;
+	height: 78px;
+	
+	border: 2px solid red;
+	border-radius: 40px;
+	
+	-webkit-transform: translate(-40px, -40px);
+}
+
+.sliding {
+	border-style: dashed;
+}
+
+#foo {
+    left: 80px;
+    top: 200px;
+}
+
+#bar {
+    left: 120px;
+    top: 60px;
+}
+
+#baz {
+    left: 200px;
+    top: 100px;
+}
