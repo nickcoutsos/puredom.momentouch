@@ -37,6 +37,9 @@
         <h1>Momentouch</h1>
 
 <p>Introduces <code>slidestart</code>, <code>slidestop</code>, and <code>sliding</code> events and simulates momentum of mouse/touch dragging on selected elements. It doesn't actually handle the movement of the nodes, but the <code>sliding</code> event gives you coordinates in the same way as a <code>mousemove</code> event, but will continue to fire these after the mouse button is released, reducing velocity over time.</p>
+
+<h2>Example</h2>
+<p>Drag the balls below. Do it.</p>
 <div id="container">
     <div class="ball" id="foo"></div>
     <div class="ball" id="bar"></div>
@@ -56,8 +59,6 @@ Where selector is a valid puredom query selector, and options is an object with 
 <li>
 <code>threshold</code> the minimum x AND y velocity. Once both velocity components are below this threshold updates will stop and the <code>slidestop</code> event will fire.</li>
 </ul>
-
-<h2>Sample Usage</h2>
 
 <div class="highlight"><pre><span class="nt">&lt;body&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ball"</span> <span class="na">id=</span><span class="s">"foo"</span><span class="nt">&gt;&lt;/div&gt;</span>
