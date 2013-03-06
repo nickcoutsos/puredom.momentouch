@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="puredom.momentouch : Simulated momentum for touch/mouse events in puredom." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>puredom.momentouch</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/nickcoutsos/puredom.momentouch">View on GitHub</a>
+
+          <h1 id="project_title">puredom.momentouch</h1>
+          <h2 id="project_tagline">Simulated momentum for touch/mouse events in puredom.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/nickcoutsos/puredom.momentouch/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/nickcoutsos/puredom.momentouch/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Momentouch</h1>
+
+<p>Introduces <code>slidestart</code>, <code>slidestop</code>, and <code>sliding</code> events and simulates momentum of mouse/touch dragging on selected elements. It doesn't actually handle the movement of the nodes, but the <code>sliding</code> event gives you coordinates in the same way as a <code>mousemove</code> event, but will continue to fire these after the mouse button is released, reducing velocity over time.</p>
+
+<h2>Usage</h2>
+
+<p><code>puredom(selector).momentouch(options)</code>
+Where selector is a valid puredom query selector, and options is an object with </p>
+
+<ul>
+<li>
+<code>dragFactor</code>: a number between 0 and 1. The velocity components is multiplied by this each update.</li>
+<li>
+<code>updateInterval</code>: number of milliseconds between <code>sliding</code> events and velocity updates once the mouse button is released.</li>
+<li>
+<code>threshold</code>: the minimum x AND y velocity. Once both velocity components are below this threshold updates will stop and the <code>slidestop</code> event will fire.</li>
+</ul><h2>Sample Usage</h2>
+
+<div class="highlight"><pre><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ball"</span> <span class="na">id=</span><span class="s">"foo"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ball"</span> <span class="na">id=</span><span class="s">"bar"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ball"</span> <span class="na">id=</span><span class="s">"baz"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+<div class="highlight"><pre><span class="nx">puredom</span><span class="p">(</span><span class="s1">'.ball'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">momentouch</span><span class="p">({</span><span class="nx">dragFactor</span><span class="o">:</span> <span class="mf">0.95</span><span class="p">})</span>
+    <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'sliding'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">ball</span> <span class="o">=</span> <span class="nx">puredom</span><span class="p">(</span><span class="k">this</span><span class="p">),</span>
+            <span class="nx">x</span> <span class="o">=</span> <span class="nx">ball</span><span class="p">.</span><span class="nx">x</span><span class="p">()</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">deltaX</span><span class="p">,</span>
+            <span class="nx">y</span> <span class="o">=</span> <span class="nx">ball</span><span class="p">.</span><span class="nx">y</span><span class="p">()</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">deltaY</span><span class="p">;</span>
+
+        <span class="nx">ball</span><span class="p">.</span><span class="nx">position</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">x</span><span class="p">),</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">y</span><span class="p">));</span>
+    <span class="p">});</span>
+</pre></div>
+
+<p>That's it.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">puredom.momentouch maintained by <a href="https://github.com/nickcoutsos">nickcoutsos</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
