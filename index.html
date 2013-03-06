@@ -7,7 +7,10 @@
     <meta name="description" content="puredom.momentouch : Simulated momentum for touch/mouse events in puredom." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/example.css">
+    
+    <script type="text/javascript" src="javascripts/puredom.light.js"></script>
+    <script type="text/javascript" src="javascripts/puredom.momentouch.js"></script>
     <title>puredom.momentouch</title>
   </head>
 
@@ -34,6 +37,11 @@
         <h1>Momentouch</h1>
 
 <p>Introduces <code>slidestart</code>, <code>slidestop</code>, and <code>sliding</code> events and simulates momentum of mouse/touch dragging on selected elements. It doesn't actually handle the movement of the nodes, but the <code>sliding</code> event gives you coordinates in the same way as a <code>mousemove</code> event, but will continue to fire these after the mouse button is released, reducing velocity over time.</p>
+<div id="container">
+    <div class="ball" id="foo"></div>
+    <div class="ball" id="bar"></div>
+    <div class="ball" id="baz"></div>
+</div>
 
 <h2>Usage</h2>
 
@@ -42,12 +50,14 @@ Where selector is a valid puredom query selector, and options is an object with 
 
 <ul>
 <li>
-<code>dragFactor</code>: a number between 0 and 1. The velocity components is multiplied by this each update.</li>
+<code>dragFactor</code> a number between 0 and 1. The velocity components is multiplied by this each update.</li>
 <li>
-<code>updateInterval</code>: number of milliseconds between <code>sliding</code> events and velocity updates once the mouse button is released.</li>
+<code>updateInterval</code> number of milliseconds between <code>sliding</code> events and velocity updates once the mouse button is released.</li>
 <li>
-<code>threshold</code>: the minimum x AND y velocity. Once both velocity components are below this threshold updates will stop and the <code>slidestop</code> event will fire.</li>
-</ul><h2>Sample Usage</h2>
+<code>threshold</code> the minimum x AND y velocity. Once both velocity components are below this threshold updates will stop and the <code>slidestop</code> event will fire.</li>
+</ul>
+
+<h2>Sample Usage</h2>
 
 <div class="highlight"><pre><span class="nt">&lt;body&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ball"</span> <span class="na">id=</span><span class="s">"foo"</span><span class="nt">&gt;&lt;/div&gt;</span>
@@ -80,6 +90,50 @@ Where selector is a valid puredom query selector, and options is an object with 
     </div>
 
     
+
+<script type="text/javascript">
+puredom(function() {
+  var bounds = {
+    x: puredom('#container').width(),
+    y: puredom('#container').height()
+  };
+
+  puredom(window).on('resize', function(e) {
+    bounds.x = puredom('#container').width();
+    bounds.y = puredom('#container').height();
+  });
+
+  puredom('.ball')
+    .momentouch({dragFactor: 0.98})
+    .on('slidestart', function(e) { puredom(this).classify('sliding'); })
+    .on('sliding', function(e) {
+      var ball = puredom(this),
+        w = ball.width(),
+        h = ball.height();
+
+      ball.css({'-webkit-transform': 'rotate(' + (e.angle + 45) + 'deg)'});
+
+      var x = ball.x() + e.deltaX,
+        y = ball.y() + e.deltaY;
+
+      if (x > bounds.x + w/2) {
+        x = -w;
+      } else if (x < -w) {
+        x = bounds.x;
+      }
+
+      if (y > bounds.y + h/2) {
+        y = -h;
+      } else if (y < -h) {
+        y = bounds.y;
+      }
+
+      ball.position(Math.round(x), Math.round(y));
+    })
+    .on('slidestop', function(e) { puredom(this).declassify('sliding'); });
+});
+
+</script>
 
   </body>
 </html>
